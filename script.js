@@ -29,39 +29,47 @@ function playRound(playerSelection, computerSelection) {
             if (computerSelection === "Rock") {
                 return "It's a tie!";
             } else if (computerSelection === "Paper") {
-                computerScore++;
-                return "You Lose! Paper beats Rock";
+                return loseRound(playerSelection, computerSelection);
             } else {
-                playerScore++;
-                return "You win! Rock beats scissors"
+                return winRound(playerSelection, computerSelection);
             }
             break;
         case "paper":
             if (computerSelection === "Paper") {
                 return "It's a tie!";
             } else if (computerSelection === "Scissors") {
-                computerScore++;
-                return "You Lose! Scissors beats Paper";
+                return loseRound(playerSelection, computerSelection);
             } else {
-                playerScore++;
-                return "You win! Paper beats Rock"
+                return winRound(playerSelection, computerSelection);
             }
             break;
         case "scissors":
             if (computerSelection === "Scissors") {
                 return "It's a tie!";
             } else if (computerSelection === "Rock") {
-                computerScore++;
-                return "You Lose! Rock beats Scissors";
+                return loseRound(playerSelection, computerSelection);
             } else {
-                playerScore++;
-                return "You win! Scissors beats paper"
+                return winRound(playerSelection, computerSelection);
             }
             break;
         default:
             return "Not a valid choice! Type rock, paper, or scissors.";
             break;
     }
+}
+
+function loseRound(playerSelection, computerSelection) {
+    computerScore++;
+    return `You Lose! ${computerSelection} beats ${capitalizeFirstLetter(playerSelection)}`;
+}
+
+function winRound(playerSelection, computerSelection) {
+    playerScore++;
+    return `You Win! ${capitalizeFirstLetter(playerSelection)} beats ${computerSelection}`;
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 game();
