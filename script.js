@@ -4,10 +4,17 @@ let computerScore = 0;
 function game() {
     let i = 1;
     while (i < 6) {
-        let selection = window.prompt("Round: " + i + " Score: " + playerScore + " (player) - " + computerScore + " (computer)");
+        let selection = window.prompt("Round: " + i + scoreboard());
         let result = playRound(selection, getComputerChoice());
         window.alert(result);
         if (result !== "Not a valid choice! Type rock, paper, or scissors.") i++;
+    }
+    if (playerScore > computerScore) {
+        window.alert("You win the game! " + scoreboard());
+    } else if (computerScore > playerScore) {
+        window.alert("You lose the game! " + scoreboard());
+    } else {
+        window.alert("You tied the game! " + scoreboard());
     }
 }
 
@@ -70,6 +77,10 @@ function winRound(playerSelection, computerSelection) {
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function scoreboard() {
+    return " Score: " + playerScore + " (player) - " + computerScore + " (computer)";
 }
 
 game();
