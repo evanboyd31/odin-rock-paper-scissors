@@ -1,6 +1,12 @@
+// global variables to keep track of scores
 let playerScore = 0;
 let computerScore = 0;
 
+/*
+The game function has a loop to play 5 rounds of rock paper scissors,
+displays winner of each round, give reminder if input was incorrect, and
+display the winner of the game.
+*/
 function game() {
     let i = 1;
     while (i < 6) {
@@ -18,6 +24,11 @@ function game() {
     }
 }
 
+/*
+getComputerChoice uses the Math.random function to generate the choice
+of rock paper or scissors for the computer, and returns the computer's choice
+as a string.
+*/
 function getComputerChoice() {
     let randomNum = Math.floor(3 * Math.random());
     if (randomNum === 0) {
@@ -29,7 +40,14 @@ function getComputerChoice() {
     }
 }
 
+/*
+the play round function examines the player & computer's choices
+and checks to see winners of each round, and makes call to loseRound
+or winRound functions to increment the score and return the appropriate
+string.
+*/
 function playRound(playerSelection, computerSelection) {
+    // ensure playerSelection is all lowercase in order for switch statement to work
     playerSelection = playerSelection.toLowerCase();
     switch (playerSelection) {
         case "rock":
@@ -40,7 +58,6 @@ function playRound(playerSelection, computerSelection) {
             } else {
                 return winRound(playerSelection, computerSelection);
             }
-            break;
         case "paper":
             if (computerSelection === "Paper") {
                 return "It's a tie!";
@@ -49,7 +66,6 @@ function playRound(playerSelection, computerSelection) {
             } else {
                 return winRound(playerSelection, computerSelection);
             }
-            break;
         case "scissors":
             if (computerSelection === "Scissors") {
                 return "It's a tie!";
@@ -58,29 +74,43 @@ function playRound(playerSelection, computerSelection) {
             } else {
                 return winRound(playerSelection, computerSelection);
             }
-            break;
         default:
+            // the player's entry was not rock, paper, or scissors.
             return "Not a valid choice! Type rock, paper, or scissors.";
-            break;
     }
 }
 
+/*
+loseRound increments the computer's score and returns the string
+to be displayed to the user after the round.
+*/
 function loseRound(playerSelection, computerSelection) {
     computerScore++;
     return `You Lose! ${computerSelection} beats ${capitalizeFirstLetter(playerSelection)}`;
 }
 
+/*
+winRound increments the player's score and returns the string
+to be displayed to the user after the round.
+*/
 function winRound(playerSelection, computerSelection) {
     playerScore++;
     return `You Win! ${capitalizeFirstLetter(playerSelection)} beats ${computerSelection}`;
 }
 
+/*
+capitalizeFirstLetter is used for formatting display messages after rounds
+*/
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+/*
+scoreboard formats a string that contains a string with both player's scores
+*/
 function scoreboard() {
     return " Score: " + playerScore + " (player) - " + computerScore + " (computer)";
 }
 
+// init game by calling game method
 game();
