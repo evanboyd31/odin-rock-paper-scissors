@@ -4,22 +4,27 @@ const rockBtn = document.querySelector('#rock');
 const paperBtn = document.querySelector('#paper');
 const scissorsBtn = document.querySelector('#scissors');
 const resultsDiv = document.querySelector('#results');
+const playerChoice = document.querySelector('.playerChoice');
+const computerChoice = document.querySelector('.computerChoice');
 
 /*
 the rock paper and scissors buttons send the player's choice
 to playRound, and check to see if there is a winner each choice.
 */
 rockBtn.addEventListener('click', function (e) {
+    playerChoice.textContent = '✊';
     playRound("Rock", getComputerChoice());
     if (computerScore === 5 || playerScore === 5) announceWinner();
 });
 
 paperBtn.addEventListener('click', function (e) {
+    playerChoice.textContent = '✋';
     playRound("Paper", getComputerChoice());
     if (computerScore === 5 || playerScore === 5) announceWinner();
 });
 
 scissorsBtn.addEventListener('click', function (e) {
+    playerChoice.textContent = '✌';
     playRound("Scissors", getComputerChoice());
     if (computerScore === 5 || playerScore === 5) announceWinner();
 });
@@ -38,10 +43,13 @@ as a string.
 function getComputerChoice() {
     let randomNum = Math.floor(3 * Math.random());
     if (randomNum === 0) {
+        computerChoice.textContent = '✊';
         return "Rock";
     } else if (randomNum === 1) {
+        computerChoice.textContent = '✋';
         return "Paper";
     } else {
+        computerChoice.textContent = '✌';
         return "Scissors";
     }
 }
@@ -137,7 +145,9 @@ function resetGame() {
     playerScore = 0;
     computerScore = 0;
     scoreboard();
-    resultsDiv.textContent = "";
+    playerChoice.textContent = "?";
+    computerChoice.textContent = "?";
+    resultsDiv.textContent = "Make your selection above";
 }
 
 /*
