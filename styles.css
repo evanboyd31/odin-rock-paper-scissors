@@ -2,8 +2,10 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     margin: 0px;
     background-color: black;
+    min-height: 100vh;
 }
 
 .header {
@@ -15,9 +17,8 @@ body {
     font-weight: bold;
     background-color: rgb(17, 43, 17);
     color: white;
-    margin: 0px 0px;
+    margin: 0px 0px 16px;
     padding: 16px;
-    margin-bottom: auto;
 }
 
 #scoreboard,
@@ -27,9 +28,11 @@ body {
     align-items: center;
     text-align: center;
     padding: 8px;
+    margin: 16px;
     background-color: rgb(50, 73, 50);
     color: white;
     font-size: 24px;
+    border-radius: 12px;
 }
 
 button {
@@ -56,6 +59,8 @@ button:active {
     padding: 24px;
     gap: 24px;
     background-color: rgba(1, 97, 1, 0.582);
+    margin: 16px;
+    border-radius: 8px;
 }
 
 .selections {
@@ -65,6 +70,8 @@ button:active {
     align-items: center;
     gap: 100px;
     padding: 32px;
+    margin: 16px;
+    border-radius: 8px;
     background-color: rgb(82, 238, 82);
     margin-top: auto;
 }
@@ -74,6 +81,8 @@ button:active {
     text-align: center;
     background-color: rgb(6, 41, 6);
     color: white;
+    margin: 16px;
+    border-radius: 8px;
 }
 
 .choice {
