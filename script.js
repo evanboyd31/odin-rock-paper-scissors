@@ -1,28 +1,34 @@
+// page elements needed
+const scoreboardDiv = document.querySelector('#scoreboard');
+const rockBtn = document.querySelector('#rock');
+const paperBtn = document.querySelector('#paper');
+const scissorsBtn = document.querySelector('#scissors');
+const resultsDiv = document.querySelector('#results');
+
+/*
+the rock paper and scissors buttons send the player's choice
+to playRound, and check to see if there is a winner each choice.
+*/
+rockBtn.addEventListener('click', function (e) {
+    playRound("Rock", getComputerChoice());
+    if (computerScore === 5 || playerScore === 5) announceWinner();
+});
+
+paperBtn.addEventListener('click', function (e) {
+    playRound("Paper", getComputerChoice());
+    if (computerScore === 5 || playerScore === 5) announceWinner();
+});
+
+scissorsBtn.addEventListener('click', function (e) {
+    playRound("Scissors", getComputerChoice());
+    if (computerScore === 5 || playerScore === 5) announceWinner();
+});
+
 // global variables to keep track of scores
 let playerScore = 0;
 let computerScore = 0;
-
-/*
-The game function has a loop to play 5 rounds of rock paper scissors,
-displays winner of each round, give reminder if input was incorrect, and
-display the winner of the game.
-*/
-function game() {
-    let i = 1;
-    while (i < 6) {
-        let selection = window.prompt("Round: " + i + scoreboard());
-        let result = playRound(selection, getComputerChoice());
-        window.alert(result);
-        if (result !== "Not a valid choice! Type rock, paper, or scissors.") i++;
-    }
-    if (playerScore > computerScore) {
-        window.alert("You win the game! " + scoreboard());
-    } else if (computerScore > playerScore) {
-        window.alert("You lose the game! " + scoreboard());
-    } else {
-        window.alert("You tied the game! " + scoreboard());
-    }
-}
+// initializing scoreboard
+scoreboard();
 
 /*
 getComputerChoice uses the Math.random function to generate the choice
@@ -43,74 +49,101 @@ function getComputerChoice() {
 /*
 the play round function examines the player & computer's choices
 and checks to see winners of each round, and makes call to loseRound
-or winRound functions to increment the score and return the appropriate
-string.
+or winRound functions to increment the score and update divs.
 */
 function playRound(playerSelection, computerSelection) {
-    // ensure playerSelection is all lowercase in order for switch statement to work
-    playerSelection = playerSelection.toLowerCase();
     switch (playerSelection) {
-        case "rock":
+        case "Rock":
             if (computerSelection === "Rock") {
-                return "It's a tie!";
+                tie();
             } else if (computerSelection === "Paper") {
-                return loseRound(playerSelection, computerSelection);
+                loseRound(playerSelection, computerSelection);
             } else {
-                return winRound(playerSelection, computerSelection);
+                winRound(playerSelection, computerSelection);
             }
-        case "paper":
+            break;
+        case "Paper":
             if (computerSelection === "Paper") {
-                return "It's a tie!";
+                tie();
             } else if (computerSelection === "Scissors") {
-                return loseRound(playerSelection, computerSelection);
+                loseRound(playerSelection, computerSelection);
             } else {
-                return winRound(playerSelection, computerSelection);
+                winRound(playerSelection, computerSelection);
             }
-        case "scissors":
+            break;
+        case "Scissors":
             if (computerSelection === "Scissors") {
-                return "It's a tie!";
+                tie();
             } else if (computerSelection === "Rock") {
-                return loseRound(playerSelection, computerSelection);
+                loseRound(playerSelection, computerSelection);
             } else {
-                return winRound(playerSelection, computerSelection);
+                winRound(playerSelection, computerSelection);
             }
-        default:
-            // the player's entry was not rock, paper, or scissors.
-            return "Not a valid choice! Type rock, paper, or scissors.";
+            break;
     }
 }
 
 /*
-loseRound increments the computer's score and returns the string
-to be displayed to the user after the round.
+loseRound increments the computer's score and updates scoreboard/results div.
 */
 function loseRound(playerSelection, computerSelection) {
     computerScore++;
-    return `You Lose! ${computerSelection} beats ${capitalizeFirstLetter(playerSelection)}`;
+    scoreboard();
+    resultsDiv.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
 }
 
 /*
-winRound increments the player's score and returns the string
-to be displayed to the user after the round.
+winRound increments the player's score and updates scoreboard/results div.
 */
 function winRound(playerSelection, computerSelection) {
     playerScore++;
-    return `You Win! ${capitalizeFirstLetter(playerSelection)} beats ${computerSelection}`;
+    scoreboard();
+    resultsDiv.textContent = `You Win! ${playerSelection} beats ${computerSelection}`;
 }
 
 /*
-capitalizeFirstLetter is used for formatting display messages after rounds
+tie updates the results div with the appropriate message
 */
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+function tie() {
+    resultsDiv.textContent = "It's a tie!";
+}
+
+/*
+announceWinner is called whenever a player reaches 5 points, 
+and displays an alert window. Once the alert is closed, the game is reset
+*/
+function announceWinner() {
+    scoreboard();
+    if (playerScore === 5) {
+        // have a timeout so scoreboard is correctly updated, reset the game once ok is hit
+        setTimeout(() => {
+            window.alert("You win!");
+            resetGame();
+        }, 100);
+    } else if (computerScore === 5) {
+        setTimeout(() => {
+            window.alert("You lose!");
+            resetGame();
+        }, 100);
+    }
+}
+
+/*
+resetGame is called after the alert window is exited after each game.
+The scoreboard and text divs are reset along with the player scores.
+*/
+function resetGame() {
+    // reset scores to start a new game
+    playerScore = 0;
+    computerScore = 0;
+    scoreboard();
+    resultsDiv.textContent = "";
 }
 
 /*
 scoreboard formats a string that contains a string with both player's scores
 */
 function scoreboard() {
-    return " Score: " + playerScore + " (player) - " + computerScore + " (computer)";
+    scoreboardDiv.textContent = " Score: " + playerScore + " (player) - " + computerScore + " (computer)";
 }
 
-// init game by calling game method
-game();
